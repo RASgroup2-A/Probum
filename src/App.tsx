@@ -1,26 +1,29 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import { BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import Cookies from 'js-cookie';
+
+import LoginPage from "./pages/LoginPage/Main";
+import CreateProvaPage from "./pages/CreateProvaPage/Main";
+
+const isAuthenticated = (type = 'docente') => {
+    const cookieToken = Cookies.get('token') || '{"type": "none"}';
+    const token = JSON.parse(cookieToken)
+    return token.type === type;
+};
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p className="underline">
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/criarprova"  element={isAuthenticated() ? <CreateProvaPage /> : <Navigate to="/login" />}/>
+                {/* <Route path="/classificarprovas" element={} /> */}
+                <Route path="*" element={<Navigate to="/login" />}/>
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
