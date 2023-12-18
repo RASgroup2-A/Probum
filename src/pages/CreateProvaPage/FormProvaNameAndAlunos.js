@@ -50,7 +50,7 @@ const FormProvaNameAndAlunos = ({setProvaData, currentDisplay, setDisplay, nextD
                         .then((result) => {
                             setProvaData({
                                 nome: provaName,
-                                alunos: conteudoJsonFile //! Ainda têm de ser divididos pelas respectivas versões
+                                alunos: conteudoJsonFile.alunos
                             });
                             setDisplay('none') //> esconde este formulário
                             nextDisplay('block') //> apresenta o próximo formulário

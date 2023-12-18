@@ -32,16 +32,17 @@ const Page = () => {
         <h1 className="text-5xl mb-8">Criar prova</h1>
         {/*//> Formulário de nome de prova e ficheiro de alunos */}
         <FormProvaNameAndAlunos 
-            setProvaData={setProvaData}  //> altera os dados da prova
+            setProvaData={setProvaData}  //> altera os dados da prova em memória
             currentDisplay={displayForm1}
             setDisplay={setDisplayForm1} 
             nextDisplay={setDisplayForm2}
         />
         {/*//> Formulário de nome data+hora e duracao da prova*/}
         <FormularioDataAndDuracao 
-            setProvaData={setProvaData}  //> altera os dados da prova
+            setProvaData={setProvaData}  //> altera os dados da prova em memória
             currentDisplay={displayForm2}
             setDisplay={setDisplayForm2}
+            provaData={prova}
         />
     </>)
 }

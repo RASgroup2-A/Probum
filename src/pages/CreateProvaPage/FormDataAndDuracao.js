@@ -1,20 +1,51 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
-const FormularioDataAndDuracao = ({ currentDisplay, setDisplay, setProvaData }) => {
-    const [dataHoraProva, setDataHoraProva] = useState('');
-    const [duracaoProva, setDuracaoProva] = useState('');
+import { apiRoute } from '../../APIGateway/config'
+import ModalPropostaCalendarizacao from './ModalPropostaCalendarizacao';
+
+const getPropostasCalendarizacao = async (alunos, dataHora, duracao) => {
+    let body = { alunos, dataHora, duracao }
+    body.dataHora = body.dataHora.replace('T', ' ')
+    let response = (await axios.post(apiRoute('/salas/calendarizacao'), body)).data
+    return response
+}
+
+/**
+ * >currentDisplay: 'block' ou 'none', indica se o formulário deve estar visível ou não
+ * >setDisplay(block ou none): Função que altera a visibilidade do formulário
+ * >setProvaData(data): Função que altera os dados da prova em memória
+ * >provaData: Dados actuais da prova
+ * >alunos: Lista de alunos que vão ser inscritos na prova.
+ */
+const FormularioDataAndDuracao = ({ currentDisplay, setDisplay, setProvaData, provaData }) => {
+    const [dataHoraProva, setDataHoraProva] = useState('')
+    const [duracaoProva, setDuracaoProva] = useState(0)
+
+    //> Modal de apresentação de propostas de calendarizacao
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalPropostas, setModalPropostas] = useState([])
+
+    //> Função para apresentar o modal
+    const modal = (propostasCalendarizacao) => {
+        setModalPropostas(propostasCalendarizacao);
+        setModalVisible(true);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setProvaData({
-            dataHoraPreferencia: dataHoraProva,
-            duracao: duracaoProva
-        });
+        getPropostasCalendarizacao(provaData.alunos, dataHoraProva, parseInt(duracaoProva))
+            .then((result) => {
+                modal(result)
+            }).catch((err) => {
+                alert(err.response.data.msg);
+            });
     };
 
     return (
-        <div style={{display: currentDisplay}}>
-            <form >
+        <div style={{ display: currentDisplay }}>
+            <ModalPropostaCalendarizacao propostas={modalPropostas} isOpen={modalVisible} onRequestClose={() => setModalVisible(false)} />
+            <form onSubmit={handleSubmit}>
                 <div className="sm:col-span-4">
                     <label className="block text-sm font-medium leading-6 text-gray-900">
                         Data e hora da prova
@@ -27,7 +58,8 @@ const FormularioDataAndDuracao = ({ currentDisplay, setDisplay, setProvaData }) 
                                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                 value={dataHoraProva}
                                 onChange={(e) => setDataHoraProva(e.target.value)}
-                                min={new Date().toISOString().slice(0,19)}
+                                min={new Date().toISOString().slice(0, 16)}
+                                step="60"
                                 required
                             />
                         </div>
