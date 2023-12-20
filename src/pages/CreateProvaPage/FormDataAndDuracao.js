@@ -36,11 +36,15 @@ const FormularioDataAndDuracao = ({ currentDisplay, setDisplay, setNextDisplay, 
         e.preventDefault();
         getPropostasCalendarizacao(provaData.alunos, dataHoraProva, parseInt(duracaoProva))
             .then((result) => {
-                modal(result)
-                setProvaData({ horarios: result })
-                setDisplay('none') //> Esconde este formulário
-                setNextDisplay('block') //> Apresenta o próximo formulário
-                console.log(provaData) //! DEBUG
+                if (!result || result.length === 0) { //> Não existe uma calendarizacão possível para o que o docente quer
+                    alert('Não foi possível encontrar obter uma calendarização tendo em conta o número de alunos e as salas disponíveis.\nPor favor, insira outra data e hora para a realização da prova.')
+                } else {
+                    modal(result) //> Apresenta as propostas de calendarizacao
+                    setProvaData({ horarios: result })
+                    setDisplay('none') //> Esconde este formulário
+                    setNextDisplay('block') //> Apresenta o próximo formulário
+                    console.log(provaData) //! DEBUG
+                }
             }).catch((err) => {
                 alert(err.response.data.msg);
             });

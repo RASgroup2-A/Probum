@@ -5,7 +5,7 @@ import Cookies from 'js-cookie';
 import FormProvaNameAndAlunos from "./FormProvaNameAndAlunos";
 import FormularioDataAndDuracao from './FormDataAndDuracao';
 import FormAleatorizacaoRetrocesso from './FormAleatorizacaoRetrocesso';
-import AssociacaoVersoesHorarios from './AssociacaoVersoesHorarios';
+import FormVersoes from './FormVersoes';
 
 
 const Page = () => {
@@ -23,7 +23,7 @@ const Page = () => {
     })
 
     const setProvaData = (data) => {
-        setProva({...prova, ...data})
+        setProva({...prova, ...data}) //> Acrescenta os campos do objecto "data" nos do objecto "prova"
     }
 
     //> Dados da interface gráfica
@@ -59,7 +59,7 @@ const Page = () => {
             provaData={prova}
         />
         {/*//>Formulário onde são associadas as versões a horários e são criadas questões  */}
-        <AssociacaoVersoesHorarios
+        <FormVersoes
             currentDisplay={displayForm4}
             setDisplay={setProvaData}
             provaData={prova}
