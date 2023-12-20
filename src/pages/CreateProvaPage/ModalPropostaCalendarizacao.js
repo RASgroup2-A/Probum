@@ -6,6 +6,7 @@ const PropostasComponent = ({ propostas }) => {
         <ul style={{ maxHeight: '500px', overflowY: 'auto' }}>
             {propostas.map((proposta, index) => (
                 <li key={index} className="mb-4 p-4 border border-gray-300 rounded">
+                    <p><strong>Proposta n.º {index + 1}</strong></p>
                     <p><strong>Edifício:</strong> {proposta.edificio}</p>
                     <p><strong>Sala:</strong> {proposta.numSala}</p>
                     <p><strong>Piso:</strong> {proposta.piso}</p>

@@ -18,7 +18,7 @@ const getPropostasCalendarizacao = async (alunos, dataHora, duracao) => {
  * >provaData: Dados actuais da prova
  * >alunos: Lista de alunos que vão ser inscritos na prova.
  */
-const FormularioDataAndDuracao = ({ currentDisplay, setDisplay, setProvaData, provaData }) => {
+const FormularioDataAndDuracao = ({ currentDisplay, setDisplay, setNextDisplay, setProvaData, provaData }) => {
     const [dataHoraProva, setDataHoraProva] = useState('')
     const [duracaoProva, setDuracaoProva] = useState(0)
 
@@ -37,6 +37,10 @@ const FormularioDataAndDuracao = ({ currentDisplay, setDisplay, setProvaData, pr
         getPropostasCalendarizacao(provaData.alunos, dataHoraProva, parseInt(duracaoProva))
             .then((result) => {
                 modal(result)
+                setProvaData({ horarios: result })
+                setDisplay('none') //> Esconde este formulário
+                setNextDisplay('block') //> Apresenta o próximo formulário
+                console.log(provaData) //! DEBUG
             }).catch((err) => {
                 alert(err.response.data.msg);
             });

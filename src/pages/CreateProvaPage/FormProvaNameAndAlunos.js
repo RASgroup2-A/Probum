@@ -13,7 +13,7 @@ const sendFormData = async (provaName, conteudoJsonFile) => {
     return (await axios.post(apiRoute('/provas/checkNameAndAlunos'), data)).data;
 }
 
-const FormProvaNameAndAlunos = ({setProvaData, currentDisplay, setDisplay, nextDisplay}) => {
+const FormProvaNameAndAlunos = ({setProvaData, provaData, currentDisplay, setDisplay, nextDisplay}) => {
     //> Nome da prova e ficheiro de alunos para submissão
     const [provaName, setProvaName] = useState('');
     const [jsonFile, setJsonFile] = useState(null);
@@ -52,6 +52,7 @@ const FormProvaNameAndAlunos = ({setProvaData, currentDisplay, setDisplay, nextD
                                 nome: provaName,
                                 alunos: conteudoJsonFile.alunos
                             });
+                            provaData.nome = provaName;
                             setDisplay('none') //> esconde este formulário
                             nextDisplay('block') //> apresenta o próximo formulário
                         }).catch((err) => {
