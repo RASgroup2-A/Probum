@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileContract, faClipboardCheck, faDoorOpen } from '@fortawesome/free-solid-svg-icons'
+import { faFileContract, faClipboardCheck, faDoorOpen, faBell } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 import Cookies from 'js-cookie'
 
@@ -34,6 +34,12 @@ const FuncionalidadesAlunos = () => {
     if (type === 'aluno') {
         return (
             <>
+                <li>
+                    <Link to="/notificacoes" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <FontAwesomeIcon className="mr-4" icon={faBell} />
+                        <span className="ms-3">Notificações</span>
+                    </Link>
+                </li>
                 <li>
                     <Link to="/provas/porRealizar" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <FontAwesomeIcon className="mr-4" icon={faFileContract} />
@@ -77,7 +83,7 @@ const MainLayout = ({ pagina }) => {
             </div>
 
             <div className="p-4 sm:ml-64">
-                <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+                <div className="p-4 rounded-lg dark:border-gray-700">
                     {pagina}
                 </div>
             </div>
