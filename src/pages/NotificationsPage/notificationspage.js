@@ -1,8 +1,11 @@
 import React from 'react';
 import MainLayout from "../Layouts/Main";
 import NotificationItem from "../../components/Notification/notificationitem"
+import { useParams } from 'react-router-dom';
 
 const Page = () => {
+    const {numMecanografico} = useParams() //numero de aluno
+
     return (
         <>
             <NotificationItem message="ola1"/>

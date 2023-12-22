@@ -31,11 +31,12 @@ const FuncionalidadesDocentes = () => {
 const FuncionalidadesAlunos = () => {
     let cookieToken = Cookies.get('token') ? Cookies.get('token') : '{"type": "none"}';
     let type = JSON.parse(cookieToken).type;
+    let number = JSON.parse(cookieToken).numMecanografico;
     if (type === 'aluno') {
         return (
             <>
                 <li>
-                    <Link to="/notificacoes" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <Link to={`/notificacoes/${number}`} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <FontAwesomeIcon className="mr-4" icon={faBell} />
                         <span className="ms-3">Notificações</span>
                     </Link>

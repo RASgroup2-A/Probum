@@ -45,8 +45,8 @@ const LoginPage = () => {
         sendLoginData(email, password)
             .then((result) => {
                 Cookies.set('token', result.token); //> define o cookie "token" para ser usado na autenticação
-                if(result.type=="aluno") window.location = '/homealuno'
-                if(result.type=="docente") window.location = '/criarprova'
+                if(result.type==="aluno") window.location = '/homealuno/'+result.numMecanografico
+                if(result.type==="docente") window.location = '/criarprova'
             }).catch((err) => {
                 modal('Acesso negado', err.response.data.msg);
             });

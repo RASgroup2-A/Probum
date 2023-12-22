@@ -19,8 +19,8 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                <Route path="/notificacoes" element={<NotificationsPage />} />
-                <Route path="/homealuno" element={<HomeStudentPage />} />
+                <Route path="/notificacoes/:numMecanografico" element={<NotificationsPage />} />
+                <Route path="/homealuno/:numMecanografico" element={<HomeStudentPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/criarprova"  element={isAuthenticated() ? <CreateProvaPage /> : <Navigate to="/login" />}/>
                 {/* <Route path="/classificarprovas" element={} /> */}
