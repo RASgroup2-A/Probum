@@ -6,6 +6,10 @@ import axios from 'axios';
 import { apiRoute } from '../../APIGateway/config'
 import ModalInfo from '../../components/Modals/ModalInfo';
 
+//import NotificationCard from '../../components/Notification/notification';
+//import io from 'socket.io-client';
+
+
 async function sendLoginData(email, password) {
     const userLoginData = {
         email: email,
@@ -20,6 +24,9 @@ const LoginPage = () => {
     const [modalTitle, setModalTitle] = useState('');
     const [modalMessage, setModalMessage] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+
+    //const [notification, setNotification] = useState('');                        //state set do texto da notificacao
+    //const [notificationVisibility, setnotificationVisibility] = useState(false); //state set da visibilidade da notificacao
 
     //> Função para apresentar o modal
     const modal = (title, message) => {
@@ -44,8 +51,21 @@ const LoginPage = () => {
             });
     };
 
+/*
+    //websocket para ficar à escuta de notificacoes (suposto colocar só depois do login e nas paginas correspondentes ao aluno- coloquei no login apenas para testar)
+    const socket = io('http://localhost:8877?numero=a97223'); // concatenar o número do aluno atual (está hardcoded)
+        socket.on('notification', (message) => {
+            setNotification(message);
+            setnotificationVisibility(true);
+    });
+
+    const closeNotification = () => {
+        setnotificationVisibility(false);
+    }
+*/
     return (
         <>
+            {/* <NotificationCard id="notificationcard" text={notification} visible={notificationVisibility} onClick={closeNotification} /> */}
             <ModalInfo title={modalTitle} message={modalMessage} isOpen={modalVisible} onRequestClose={() => setModalVisible(false)} />
             <div className="min-h-screen flex items-center justify-center">
                 <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
