@@ -42,7 +42,7 @@ const LoginPage = () => {
                 if(result.type==="aluno") window.location = '/homealuno/'+result.numMecanografico
                 if(result.type==="docente") window.location = '/criarprova'
             }).catch((err) => {
-                modal('Acesso negado', err.response.data.msg);
+                modal('Acesso negado', err.response.data.message);
             });
     };
 
