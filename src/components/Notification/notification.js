@@ -3,7 +3,7 @@ import React from 'react';
 export default function NotificationCard({ text,visible }) {
 
     const notificationCardStyle = {
-        visibility: ((visible==true) ? 'visible' : 'hidden'),
+        visibility: ((visible===true) ? 'visible' : 'hidden'),
         borderRadius: "5px",
         display: "inline-flex", 
         alignItems: "center",   
