@@ -8,6 +8,7 @@ import CreateProvaPage from "./pages/CreateProvaPage/Main";
 import HomeStudentPage from "./pages/HomeStudentPage/Main";
 import NotificationsPage from "./pages/NotificationsPage/notificationspage";
 import RegisterPage from "./pages/RegistationPage/registationpage";
+import EditPerfilPage from "./pages/EditPerf/editperfpage";
 
 const isAuthenticated = (type = 'docente') => {
     const cookieToken = Cookies.get('token') || '{"type": "none"}';
@@ -25,6 +26,7 @@ function App() {
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/criarprova"  element={isAuthenticated() ? <CreateProvaPage /> : <Navigate to="/login" />}/>
+                <Route path="/editPerf" element={isAuthenticated() ? <EditPerfilPage /> : <Navigate to="/login" />}/>
                 {/* <Route path="/classificarprovas" element={} /> */}
                 <Route path="*" element={<Navigate to="/login" />}/>
             </Routes>
