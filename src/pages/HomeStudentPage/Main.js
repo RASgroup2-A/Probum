@@ -24,9 +24,7 @@ const Page = () => {
 
     return (
         <>
-            { notificationVisibility ?
-                (<NotificationCard id="notificationcard" text={notification} visible={notificationVisibility} onClick={closeNotification} />):null
-            }
+            <NotificationCard id="notificationcard" text={notification} visible={notificationVisibility} onClick={closeNotification} />
             <div style={{ fontWeight: 'bold',fontSize: "35px"}}>Dashboard - Home Page</div> 
             <div style={{ fontSize: "20px" }}>Bem-Vindo, {numMecanografico}</div> 
             <div className="slogan-image-container">

@@ -42,9 +42,7 @@ const Page = () => {
 
         return (
             <>
-                { notificationVisibility ?
-                    (<NotificationCard id="notificationcard" text={notification} onClick={closeNotification} />):null
-                }
+                <NotificationCard id="notificationcard" text={notification} visible={notificationVisibility} onClick={closeNotification} />
                 <div style={{ fontWeight: 'bold',fontSize: "25px" }}>Dashboard Notifications</div> 
                 {
                     notificacoes.map(obj=>{
