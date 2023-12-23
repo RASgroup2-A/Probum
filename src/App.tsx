@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage/Main";
 import CreateProvaPage from "./pages/CreateProvaPage/Main";
 import HomeStudentPage from "./pages/HomeStudentPage/Main";
 import NotificationsPage from "./pages/NotificationsPage/notificationspage";
+import RegisterPage from "./pages/RegistationPage/registationpage";
 
 const isAuthenticated = (type = 'docente') => {
     const cookieToken = Cookies.get('token') || '{"type": "none"}';
@@ -22,6 +23,7 @@ function App() {
                 <Route path="/notificacoes/:numMecanografico" element={<NotificationsPage />} />
                 <Route path="/homealuno/:numMecanografico" element={<HomeStudentPage />} />
                 <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
                 <Route path="/criarprova"  element={isAuthenticated() ? <CreateProvaPage /> : <Navigate to="/login" />}/>
                 {/* <Route path="/classificarprovas" element={} /> */}
                 <Route path="*" element={<Navigate to="/login" />}/>
