@@ -1,5 +1,8 @@
 import React, { useState } from "react"
 import { Button, Modal } from 'flowbite-react';
+import axios from 'axios'
+
+import { apiRoute } from "../../APIGateway/config";
 
 const ESCOLHA_MULTIPLA = 1
 const VERDADEIRO_FALSO = 2
@@ -7,7 +10,53 @@ const VERDADEIRO_FALSO = 2
 const NewTH = ({ children }) => (<th className="text-left">{children}</th>)
 const NewTD = ({ children }) => (<td><div className="ml-4">{children}</div></td>)
 
-const QuestaoForm = ({ debug,addQuestao, onRequestClose, isOpen }) => {
+const todasAsVersoesTemQuestoes = (prova) => {
+    return prova.versoes.every(versao => versao.questoes.length > 0);
+}
+
+const submitProva = (prova) => {
+    const fieldsProva = ['nome', 'docentes', 'unidadeCurricular', 'retrocesso', 'aleatorizacao', 'versoes']
+    const fieldsVersao = ['alunos', 'sala', 'edificio', 'piso', 'data', 'questoes', 'numversao', 'duracao', '_id'] //> _id é o id da sala
+    const fieldsQuestao = ['descricao', 'tipo', 'cotacao', 'desconto', 'opcoes']
+    const fieldsOpcao = ['texto', 'correcta']
+    //> Eliminação de campos desnecessários
+    Object.keys(prova).forEach(field => {
+        if (!fieldsProva.find(f => f === field)) {//> O campo da prova é desnecessário na base de dados 
+            delete prova[field]
+        }
+    })
+    prova.versoes.forEach(versao => {
+        Object.keys(versao).forEach(field => {
+            if (!fieldsVersao.find(f => f === field)) {//> O campo da versao é desnecessário na base de dados 
+                delete versao[field]
+            }
+        })
+        versao.questoes.forEach(questao => {
+            Object.keys(questao).forEach(field => {
+                if (!fieldsQuestao.find(f => f === field)) {//> O campo da questao é desnecessário na base de dados 
+                    delete questao[field]
+                }
+            })
+            questao.opcoes.forEach(opcao => {
+                Object.keys(opcao).forEach(field => {
+                    if (!fieldsOpcao.find(f => f === field)) {//> O campo da questao é desnecessário na base de dados 
+                        delete opcao[field]
+                    }
+                })
+            })
+        })
+    });
+    //! TALVEZ NOTIFICAR AQUI OS ALUNOS INSCRITOS
+    return axios.post(apiRoute('/provas/register'), prova)
+        .then((result) => {
+            return result
+        }).catch((err) => {
+            alert(err.response.data.msg)
+            throw err
+        });
+}
+
+const QuestaoForm = ({ debug, addQuestao, onRequestClose, isOpen }) => {
     const [questao, setQuestao] = useState({
         descricao: '',
         tipo: ESCOLHA_MULTIPLA,
@@ -17,7 +66,14 @@ const QuestaoForm = ({ debug,addQuestao, onRequestClose, isOpen }) => {
     })
 
     const handleSubmit = () => {
-        addQuestao(questao)
+        addQuestao({ ...questao })
+        setQuestao({
+            descricao: '',
+            tipo: ESCOLHA_MULTIPLA,
+            cotacao: 0,
+            desconto: 0,
+            opcoes: []
+        })
         debug()
         onRequestClose()
     }
@@ -114,9 +170,9 @@ const QuestaoForm = ({ debug,addQuestao, onRequestClose, isOpen }) => {
                                         <label>Opção</label>
                                         <input type="text" onChange={(e) => setOpcao(i, e.target.value, null)} className="border-black	border-2" />
 
-                                        <input onChange={(e) => setOpcao(i,null,true)} className="ml-2" type="radio" name={`correcta${i}`} />
+                                        <input onChange={(e) => setOpcao(i, null, true)} className="ml-2" type="radio" name={`correcta${i}`} />
                                         <label>Correcta</label>
-                                        <input onChange={(e) => setOpcao(i,null,false)} className="ml-2" type="radio" name={`correcta${i}`} />
+                                        <input onChange={(e) => setOpcao(i, null, false)} className="ml-2" type="radio" name={`correcta${i}`} />
                                         <label>Incorrecta</label>
                                     </div>
                                 )}
@@ -124,7 +180,18 @@ const QuestaoForm = ({ debug,addQuestao, onRequestClose, isOpen }) => {
                         )}
                         {questao.tipo === VERDADEIRO_FALSO && (
                             <>
-                                {VERDADEIRO_FALSO}
+                                <button onClick={() => addOpcao('', false)}><u>Adicionar afirmação</u></button><br />
+                                {questao.opcoes.map((opcao, i) =>
+                                    <div key={i}>
+                                        <label>Afirmação</label>
+                                        <input type="text" onChange={(e) => setOpcao(i, e.target.value, null)} className="border-black	border-2" />
+
+                                        <input onChange={(e) => setOpcao(i, null, true)} className="ml-2" type="radio" name={`correcta${i}`} />
+                                        <label>Verdadeira</label>
+                                        <input onChange={(e) => setOpcao(i, null, false)} className="ml-2" type="radio" name={`correcta${i}`} />
+                                        <label>Falsa</label>
+                                    </div>
+                                )}
                             </>
                         )}
                     </div>
@@ -137,11 +204,14 @@ const QuestaoForm = ({ debug,addQuestao, onRequestClose, isOpen }) => {
     )
 }
 
-const VersaoForm = ({ prova, numVersao, addQuestaoInVersao, debug }) => {
-    
+const VersaoForm = ({ versao, numVersao, addQuestaoInVersao, debug }) => {
+    const estiloTabela = {
+        border: '1px solid black',
+        borderCollapse: 'collapse',
+    };
     //> Formulário de criar questão
     const [openFormQuestoes, setOpenFormQuestoes] = useState(false)
-    const addQuestao = (questao) => addQuestaoInVersao(numVersao, questao) 
+    const addQuestao = (questao) => addQuestaoInVersao(numVersao, questao)
     return (
         <>
             <QuestaoForm debug={debug} addQuestao={addQuestao} isOpen={openFormQuestoes} onRequestClose={() => setOpenFormQuestoes(false)} />
@@ -150,37 +220,104 @@ const VersaoForm = ({ prova, numVersao, addQuestaoInVersao, debug }) => {
                 <tbody>
                     <tr>
                         <NewTH>Edifício:</NewTH>
-                        <NewTD>{prova.versoes[numVersao].edificio}</NewTD>
+                        <NewTD>{versao.edificio}</NewTD>
                     </tr>
                     <tr>
                         <NewTH>Sala:</NewTH>
-                        <NewTD>{prova.versoes[numVersao].numSala}</NewTD>
+                        <NewTD>{versao.numSala}</NewTD>
                     </tr>
                     <tr>
                         <NewTH>Piso:</NewTH>
-                        <NewTD>{prova.versoes[numVersao].piso}</NewTD>
+                        <NewTD>{versao.piso}</NewTD>
                     </tr>
                     <tr>
                         <NewTH>Capacidade:</NewTH>
-                        <NewTD>{prova.versoes[numVersao].capacidade}</NewTD>
+                        <NewTD>{versao.capacidade}</NewTD>
                     </tr>
                     <tr>
                         <NewTH>Alunos:</NewTH>
-                        <NewTD>{`${(prova.versoes[numVersao].alunos||[]).length} alunos`}</NewTD>
+                        <NewTD>{`${(versao.alunos || []).length} alunos`}</NewTD>
                     </tr>
                 </tbody>
             </table>
             <div>
                 <strong className="text-2xl">Questões</strong>
-                <button onClick={() => setOpenFormQuestoes(true)} className="ml-4"><u>Adicionar questão</u></button>
+                <button onClick={() => setOpenFormQuestoes(true)} className="ml-4"><u>Adicionar questão</u></button><br />
+                {versao.questoes.map((questao, indexQ) => {
+                    if (questao.tipo === ESCOLHA_MULTIPLA) {
+                        return (
+                            <div key={indexQ} className="border-2 border-gray-500 p-4">
+                                <strong>Questão n.º {indexQ + 1}</strong>
+                                <p>Cotação: {questao.cotacao} pontos, Desconto: {questao.desconto} pontos</p>
+                                <p><b>Descrição: </b>{questao.descricao}</p>
+                                <p><b>Opções</b></p>
+                                <table style={estiloTabela}>
+                                    <thead>
+                                        <tr>
+                                            <th style={estiloTabela}>Opção</th>
+                                            <th style={estiloTabela}>Correcta/Incorrecta</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {questao.opcoes.map((opcao, indexO) => {
+                                            return (
+                                                <tr key={indexO}>
+                                                    <td style={estiloTabela}>{opcao.texto}</td>
+                                                    <td style={estiloTabela}>{opcao.correcta ? 'Correcta' : 'Incorrecta'}</td>
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )
+                    } else {
+                        return (
+                            <div key={indexQ} className="border-2 border-gray-500 p-4">
+                                <strong>Questão n.º {indexQ + 1}</strong>
+                                <p>Cotação: {questao.cotacao} pontos, Desconto: {questao.desconto} pontos</p>
+                                <p><b>Descrição: </b>{questao.descricao}</p>
+                                <p><b>Opções</b></p>
+                                <table style={estiloTabela}>
+                                    <thead>
+                                        <tr>
+                                            <th style={estiloTabela}>Afirmação</th>
+                                            <th style={estiloTabela}>Verdadeira/Falsa</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {questao.opcoes.map((opcao, indexO) => {
+                                            return (
+                                                <tr key={indexO}>
+                                                    <td style={estiloTabela}>{opcao.texto}</td>
+                                                    <td style={estiloTabela}>{opcao.correcta ? 'Verdadeira' : 'Falsa'}</td>
+                                                </tr>
+                                            )
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                        )
+                    }
+                })}
             </div>
-
             <hr />
         </>
     )
 }
 
 const FormVersoes = ({ currentDisplay, setDisplay, provaData, addQuestaoInVersao }) => {
+    const sendProva = () => {
+        console.log(provaData)
+        submitProva(provaData) //! DEBUG
+            .then((result) => {
+                alert('Prova submetida com sucesso')
+                window.location = '/criarprova'
+            }).catch((err) => {
+                alert(err.response.data.msg)
+            });
+    }
+
     return (
         <div style={{ display: currentDisplay }}>
             <table>
@@ -207,13 +344,18 @@ const FormVersoes = ({ currentDisplay, setDisplay, provaData, addQuestaoInVersao
                     </tr>
                 </tbody>
             </table>
-
+            <Button
+                color="blue"
+                disabled={!todasAsVersoesTemQuestoes(provaData)}
+                title={todasAsVersoesTemQuestoes(provaData) ? 'Registar prova' : 'Existem ainda versões sem questões'}
+                onClick={() => sendProva()}
+            >Registar prova</Button>
             <hr className="mt-2 border-2" />
 
             <div>
-                {(provaData.versoes || []).map((_, i) =>
+                {(provaData.versoes || []).map((versao, i) =>
                     <VersaoForm
-                        prova={provaData}
+                        versao={versao}
                         numVersao={i}
                         addQuestaoInVersao={addQuestaoInVersao}
                         key={i}

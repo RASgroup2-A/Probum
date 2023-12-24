@@ -16,6 +16,7 @@ const sendFormData = async (provaName, conteudoJsonFile) => {
 const FormProvaNameAndAlunos = ({setProvaData, provaData, currentDisplay, setDisplay, nextDisplay}) => {
     //> Nome da prova e ficheiro de alunos para submissão
     const [provaName, setProvaName] = useState('');
+    const [ucName, setUcName] = useState('');
     const [jsonFile, setJsonFile] = useState(null);
 
     //> Dados de um modal para apresentar possíveis avisos
@@ -50,6 +51,7 @@ const FormProvaNameAndAlunos = ({setProvaData, provaData, currentDisplay, setDis
                         .then((result) => {
                             setProvaData({
                                 nome: provaName,
+                                unidadeCurricular: ucName,
                                 alunos: conteudoJsonFile.alunos
                             });
                             provaData.nome = provaName;
@@ -92,6 +94,22 @@ const FormProvaNameAndAlunos = ({setProvaData, provaData, currentDisplay, setDis
                                 className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
                                 placeholder="Insira o nome da prova"
                                 onChange={(e) => setProvaName(e.target.value)}
+                                required
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="sm:col-span-4">
+                    <label htmlFor="Nome da prova" className="block text-sm font-medium leading-6 text-gray-900">
+                        Unidade curricular
+                    </label>
+                    <div className="mt-2 mb-4">
+                        <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                            <input
+                                type="text"
+                                className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                                placeholder="Insira a unidade curricular"
+                                onChange={(e) => setUcName(e.target.value)}
                                 required
                             />
                         </div>
