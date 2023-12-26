@@ -9,6 +9,8 @@ import HomeStudentPage from "./pages/HomeStudentPage/Main";
 import NotificationsPage from "./pages/NotificationsPage/notificationspage";
 import RegisterPage from "./pages/RegistationPage/registationpage";
 import EditPerfilPage from "./pages/EditPerf/editperfpage";
+import RemoveRoomsPage from "./pages/RemoveRoomsPage/RemoveRooms";
+import ManageRoomsPage from "./pages/ManageRoomsPage/ManageRooms";
 
 const isAuthenticated = (type = 'docente') => {
     const cookieToken = Cookies.get('token') || '{"type": "none"}';
@@ -29,6 +31,9 @@ function App() {
                 <Route path="/editPerf" element={isAuthenticated() ? <EditPerfilPage /> : <Navigate to="/login" />}/>
                 {/* <Route path="/classificarprovas" element={} /> */}
                 <Route path="*" element={<Navigate to="/login" />}/>
+                <Route path="/gerirsalas" element={<ManageRoomsPage />} />
+                {/*<Route path="/adicionarsalas" element={<AddRoomsPage} /> */}
+                <Route path="/removersalas" element={<RemoveRoomsPage />} />
             </Routes>
         </BrowserRouter>
     );
