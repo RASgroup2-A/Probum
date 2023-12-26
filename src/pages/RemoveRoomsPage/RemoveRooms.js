@@ -25,7 +25,7 @@ const RemoveRoomsPage = () => {
         <div className="flex h-screen">
             <div className= "w-1/3 bg-gray-700"></div>
 
-            <div className= "w-2/3 bg-gray-300">
+            <div className= "w-2/3 p-8 bg-gray-300">
                 <div className= "mt-8 mx-auto pl-2 pt-2 pb-2 w-11/12 bg-gray-200 rounded-md">
                     <div className="ml-8 mt-8 mb-12 w-11/12 bg-gray-100 text-center text-3xl font-bold text-gray-500 rounded-md"> ELIMINAR SALAS </div>
                     {rooms.map((room, index) => (
