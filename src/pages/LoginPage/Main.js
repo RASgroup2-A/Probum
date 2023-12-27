@@ -47,7 +47,8 @@ const LoginPage = () => {
                 if(isAluno()) window.location = '/homealuno/'+numMecanografico()
                 else if(isDocente()) window.location = '/criarprova'
             }).catch((err) => {
-                modal('Acesso negado', err.response.data.msg);
+                let message = "O email ou a password que inseriu estão incorretos. Tente novamente."
+                modal('Acesso negado', message);
             });
     };
     
