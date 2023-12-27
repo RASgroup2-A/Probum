@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MainLayout from "../Layouts/Main";
-import Cookies from 'js-cookie';
 
+import { numMecanografico } from '../../auth/auth'
 import FormProvaNameAndAlunos from "./FormProvaNameAndAlunos";
 import FormularioDataAndDuracao from './FormDataAndDuracao';
 import FormAleatorizacaoRetrocesso from './FormAleatorizacaoRetrocesso';
@@ -9,14 +9,11 @@ import FormVersoes from './FormVersoes';
 
 
 const Page = () => {
-    //> Dados de autenticação para saber quem é o docente que está a criar a prova
-    const cookieToken = Cookies.get('token') ? Cookies.get('token') : '{"numMecanografico": "none"}';
-    const token = JSON.parse(cookieToken)
 
     //> Informações da prova em memória
     const [prova, setProva] = useState({
         nome: '',
-        docentes: [token.numMecanografico],
+        docentes: [numMecanografico()],
         unidadeCurricular: '',
         retrocesso: false,
         versoes: []
