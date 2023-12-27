@@ -26,6 +26,18 @@ const Page = () => {
         setProva({...prova, ...data}) //> Acrescenta os campos do objecto "data" nos do objecto "prova"
     }
 
+    //> Adiciona uma versão à prova
+    // const addVersao = (versao) => {
+    //     setProva({...prova, versoes: [...(prova.versoes), versao]})
+    // }
+
+    //> Adiciona uma questão a uma versão
+    const addQuestaoInVersao = (versaoKey, questao) => {
+        const novaProva = { ...prova };
+        novaProva.versoes[versaoKey].questoes.push(questao)
+        setProva(novaProva)
+    }
+ 
     //> Dados da interface gráfica
     const [displayForm1, setDisplayForm1] = useState('block') //> para controlar a visibilidade do formulário de nome de prova e alunos
     const [displayForm2, setDisplayForm2] = useState('none') //> para controlar a visibilidade do formulário da data+hora e duração da prova
@@ -61,8 +73,10 @@ const Page = () => {
         {/*//>Formulário onde são associadas as versões a horários e são criadas questões  */}
         <FormVersoes
             currentDisplay={displayForm4}
-            setDisplay={setProvaData}
+            setDisplay={setDisplayForm4}
             provaData={prova}
+            addQuestaoInVersao={addQuestaoInVersao}
+            
         />
     </>)
 }
