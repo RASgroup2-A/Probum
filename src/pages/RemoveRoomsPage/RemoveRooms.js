@@ -23,7 +23,7 @@ const RemoveRoomsPage = () => {
 
     async function handleRemoveRoom(roomId) {
         try {
-            await axios.delete(apiRoute('/salas'), { id: roomId });
+            await axios.delete(apiRoute('/salas/${roomId}'));
             setRooms(rooms => rooms.filter(room => room._id !== roomId));
         } catch(error) {
             console.error('Erro ao remover sala:', error);
