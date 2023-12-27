@@ -1,14 +1,15 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
-import Cookies from 'js-cookie';
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
+import { isAuthenticated, isDocente, isAluno, numMecanografico } from "./auth/auth"
 import LoginPage from "./pages/LoginPage/Main";
 import CreateProvaPage from "./pages/CreateProvaPage/Main";
 import HomeStudentPage from "./pages/HomeStudentPage/Main";
 import NotificationsPage from "./pages/NotificationsPage/notificationspage";
 import RegisterPage from "./pages/RegistationPage/registationpage";
 import EditPerfilPage from "./pages/EditPerf/editperfpage";
+import PageProvasNaoRealizadas from "./pages/PageProvasNaoRealizadas/Main";
 import AddRoomsPage from "./pages/AddRoomsPage/AddRooms";
 import RemoveRoomsPage from "./pages/RemoveRoomsPage/RemoveRooms";
 import ManageRoomsPage from "./pages/ManageRoomsPage/ManageRooms";
@@ -19,7 +20,6 @@ const isAuthenticated = (type = 'docente') => {
     return token.type === type;
 };
 
-
 function App() {
     return (
         <BrowserRouter>
@@ -28,13 +28,17 @@ function App() {
                 <Route path="/homealuno/:numMecanografico" element={<HomeStudentPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
-                <Route path="/criarprova"  element={isAuthenticated() ? <CreateProvaPage /> : <Navigate to="/login" />}/>
-                <Route path="/editPerf" element={isAuthenticated() ? <EditPerfilPage /> : <Navigate to="/login" />}/>
+                <Route path="/criarprova" element={isDocente() ? <CreateProvaPage /> : <Navigate to="/login" />} />
+                <Route path="/editPerf" element={isAuthenticated() ? <EditPerfilPage /> : <Navigate to="/login" />} />
+                <Route path="/provas/porRealizar" element={isAluno() ? <PageProvasNaoRealizadas numMecAluno={numMecanografico()} /> : <Navigate to="/login" />} />
+                <Route path="/prova/:idProva/realizar" />
                 {/* <Route path="/classificarprovas" element={} /> */}
+
                 <Route path="*" element={<Navigate to="/login" />}/>
                 <Route path="/gerirsalas" element={<ManageRoomsPage />} />
                 <Route path="/adicionarsalas" element={<AddRoomsPage />} /> 
                 <Route path="/removersalas" element={<RemoveRoomsPage />} />
+
             </Routes>
         </BrowserRouter>
     );

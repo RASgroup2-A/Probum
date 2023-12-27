@@ -14,11 +14,13 @@
     "@types/react": "^18.2.39",
     "@types/react-dom": "^18.2.17",
     "axios": "^1.6.2",
+    "date-fns": "^3.0.6",
     "doom-react-notifications": "^0.1.12",
     "flowbite": "^2.2.0",
     "flowbite-react": "^0.7.0",
     "husky": "^8.0.3",
     "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
     "lint-staged": "^15.1.0",
     "prettier": "^3.1.0",
     "react": "^18.2.0",
@@ -67,6 +69,7 @@
   },
   "devDependencies": {
     "@types/js-cookie": "^3.0.6",
+    "@types/jsonwebtoken": "^9.0.5",
     "tailwindcss": "^3.3.6"
   }
 }

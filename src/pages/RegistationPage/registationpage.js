@@ -1,17 +1,17 @@
 import axios from "axios";
-import {apiRoute} from "../../APIGateway/config";
-
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
+
+import {apiRoute} from "../../APIGateway/config";
 import ModalInfo from "../../components/Modals/ModalInfo";
 
-async function sendRegistationData(email, password, name, numMecanografico, type) {
+async function sendRegistationData(email, password, name, numMecanografico, usertype) {
     const userRegisterData = {
+        username: name,
         email: email,
         password: password,
-        name: name,
         numMecanografico: numMecanografico,
-        type: type
+        type: usertype
     }
     return (await axios.post(apiRoute('/register'), userRegisterData)).data;
 }
@@ -35,13 +35,13 @@ const RegisterPage = () => {
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [numMecanografico, setNumMecanografico] = useState('');
-    const [type, setType] = useState('');
+    const [usertype, setUsertype] = useState('Aluno');
 
 
     //> Submete dados do formulário de login
     const handleSubmit = (e) => {
         e.preventDefault();
-        sendRegistationData(email, password, name, numMecanografico, type)
+        sendRegistationData(email, password, name, numMecanografico, usertype)
             .then((result) => {
                 Cookies.set('token', result.token); //> define o cookie "token" para ser usado na autenticação
                 window.location = '/login'
@@ -55,7 +55,7 @@ const RegisterPage = () => {
             {/* <NotificationCard id="notificationcard" text={notification} visible={notificationVisibility} onClick={closeNotification} /> */}
             <ModalInfo title={modalTitle} message={modalMessage} isOpen={modalVisible} onRequestClose={() => setModalVisible(false)} />
             <div className="min-h-screen flex items-center justify-center">
-                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+                <form className="bg-white shadow-2xl rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                             Email
@@ -117,11 +117,9 @@ const RegisterPage = () => {
                             name="type"
                             type="text"
                             placeholder="Tipo de Utilizador"
-                            value={type}
-                            onChange={(e) => setType(e.target.value)}
-                        >
-                            <option value="aluno">Aluno</option>
-                            <option value="docente">Docente</option>
+                            onChange={(e) => setUsertype(e.target.value)}>
+                            <option value="Aluno">Aluno</option>
+                            <option value="Docente">Docente</option>
                         </select>
                     </div>
                     <div className="flex items-center justify-between">

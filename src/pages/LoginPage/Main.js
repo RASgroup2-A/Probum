@@ -2,6 +2,9 @@
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { isDocente, isAluno, numMecanografico } from "../../auth/auth"
+
 
 import { apiRoute } from '../../APIGateway/config'
 import ModalInfo from '../../components/Modals/ModalInfo';
@@ -38,20 +41,28 @@ const LoginPage = () => {
         e.preventDefault();
         sendLoginData(email, password)
             .then((result) => {
+                console.log("resultado:")
+                console.log(result.token)
                 Cookies.set('token', result.token); //> define o cookie "token" para ser usado na autenticação
-                if(result.type==="aluno") window.location = '/homealuno/'+result.numMecanografico
-                if(result.type==="docente") window.location = '/criarprova'
+                if(isAluno()) window.location = '/homealuno/'+numMecanografico()
+                else if(isDocente()) window.location = '/criarprova'
             }).catch((err) => {
-                modal('Acesso negado', err.response.data.msg);
+                let message = "O email ou a password que inseriu estão incorretos. Tente novamente."
+                modal('Acesso negado', message);
             });
     };
-
+    
+    const linkStyle = {
+        margin: "0.4rem",
+        textDecoration: "none",
+        color: 'blue'
+    };
 
     return (
         <>
             <ModalInfo title={modalTitle} message={modalMessage} isOpen={modalVisible} onRequestClose={() => setModalVisible(false)} />
             <div className="min-h-screen flex items-center justify-center">
-                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
+                <form className="bg-white shadow-2xl rounded px-8 pt-6 pb-8 mb-4" onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
                             Email
@@ -79,9 +90,14 @@ const LoginPage = () => {
                         />
                     </div>
                     <div className="flex items-center justify-between">
-                        <button typeof='submit' className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                        <div style={{justifyContent: 'center'}}>
+                        <button typeof='submit' style={{ marginLeft:'90px'}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
                             Entrar
                         </button>
+                        <label style={{ marginTop:'10px'}} className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+                            Não possui uma conta? Registe-se<Link style={linkStyle} to={`/register`}>aqui.</Link>
+                        </label>
+                        </div>
                     </div>
                 </form>
             </div>
