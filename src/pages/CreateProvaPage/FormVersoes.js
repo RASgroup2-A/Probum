@@ -16,7 +16,7 @@ const todasAsVersoesTemQuestoes = (prova) => {
 
 const submitProva = (prova) => {
     const fieldsProva = ['nome', 'docentes', 'unidadeCurricular', 'retrocesso', 'aleatorizacao', 'versoes']
-    const fieldsVersao = ['alunos', 'sala', 'edificio', 'piso', 'data', 'questoes', 'numversao', 'duracao', '_id'] //> _id é o id da sala
+    const fieldsVersao = ['alunos', 'sala', 'edificio', 'piso', 'data', 'questoes', 'numVersao', 'duracao', '_id'] //> _id é o id da sala
     const fieldsQuestao = ['descricao', 'tipo', 'cotacao', 'desconto', 'opcoes']
     const fieldsOpcao = ['texto', 'correcta']
     //> Eliminação de campos desnecessários

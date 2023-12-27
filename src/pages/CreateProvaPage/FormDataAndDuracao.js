@@ -47,6 +47,8 @@ const FormularioDataAndDuracao = ({ currentDisplay, setDisplay, setNextDisplay, 
                             v.data = dataHoraProva.replace('T',' ');
                             v.duracao = parseInt(duracaoProva);
                             v.sala = result[i].numSala;
+                            v.piso = result[i].piso;
+                            v.edificio = result[i].edificio;
                             v.questoes=[];
                             return v
                         }) 

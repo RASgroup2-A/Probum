@@ -29,7 +29,7 @@ const Page = () => {
             <div style={{ fontSize: "20px" }}>Bem-Vindo, {numMecanografico}</div> 
             <div className="slogan-image-container">
                 <div>
-                    <p className="slogan"><h1>Elevate Learning and Embrace Progress <br /> Probum - Online Exams System</h1></p>
+                    <h1><p className="slogan">Elevate Learning and Embrace Progress <br /> Probum - Online Exams System</p></h1>
                     <p style={{ letterSpacing: '2px',fontFamily: 'serif',fontSize: "18px",marginTop:"-50px" }}>Experience an unique journey into the future of education with Probum system. Our online exams system empowers learners with a user-friendly interface, innovative features, and secure assessments. Probum ensures a transformative educational experience, where success and technology meet together.</p>
                 </div>
                 <img src="/_248c1cfe-53a9-4558-940a-ac43243e1724.jpg" alt="Description of the image" />

@@ -3,6 +3,9 @@ import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { isDocente, isAluno, numMecanografico } from "../../auth/auth"
+
+
 import { apiRoute } from '../../APIGateway/config'
 import ModalInfo from '../../components/Modals/ModalInfo';
 
@@ -41,8 +44,8 @@ const LoginPage = () => {
                 console.log("resultado:")
                 console.log(result.token)
                 Cookies.set('token', result.token); //> define o cookie "token" para ser usado na autenticação
-                if(result.type==="Aluno") window.location = '/homealuno/'+result.numMecanografico
-                if(result.type==="Docente") window.location = '/criarprova'
+                if(isAluno()) window.location = '/homealuno/'+numMecanografico()
+                else if(isDocente()) window.location = '/criarprova'
             }).catch((err) => {
                 modal('Acesso negado', err.response.data.msg);
             });

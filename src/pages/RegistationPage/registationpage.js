@@ -1,15 +1,15 @@
 import axios from "axios";
-import {apiRoute} from "../../APIGateway/config";
-
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
+
+import {apiRoute} from "../../APIGateway/config";
 import ModalInfo from "../../components/Modals/ModalInfo";
 
 async function sendRegistationData(email, password, name, numMecanografico, usertype) {
     const userRegisterData = {
+        username: name,
         email: email,
         password: password,
-        name: name,
         numMecanografico: numMecanografico,
         type: usertype
     }
