@@ -6,7 +6,7 @@ import Cookies from 'js-cookie'
 const FuncionalidadesDocentes = () => {
     let cookieToken = Cookies.get('token') ? Cookies.get('token') : '{"type": "none"}';
     let type = JSON.parse(cookieToken).type;
-    if (type === 'docente') {
+    if (type === 'Docente') {
         return (
             <>
                 <li>
@@ -32,7 +32,7 @@ const FuncionalidadesAlunos = () => {
     let cookieToken = Cookies.get('token') ? Cookies.get('token') : '{"type": "none"}';
     let type = JSON.parse(cookieToken).type;
     let number = JSON.parse(cookieToken).numMecanografico;
-    if (type === 'aluno') {
+    if (type === 'Aluno') {
         return (
             <>
                 <li>
