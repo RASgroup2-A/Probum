@@ -14,12 +14,6 @@ import AddRoomsPage from "./pages/AddRoomsPage/AddRooms";
 import RemoveRoomsPage from "./pages/RemoveRoomsPage/RemoveRooms";
 import ManageRoomsPage from "./pages/ManageRoomsPage/ManageRooms";
 
-const isAuthenticated = (type = 'docente') => {
-    const cookieToken = Cookies.get('token') || '{"type": "none"}';
-    const token = JSON.parse(cookieToken)
-    return token.type === type;
-};
-
 function App() {
     return (
         <BrowserRouter>
