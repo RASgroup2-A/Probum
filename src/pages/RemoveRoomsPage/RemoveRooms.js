@@ -21,6 +21,15 @@ const RemoveRoomsPage = () => {
         getRooms();
     }, []);
 
+    async function handleRemoveRoom(roomId) {
+        try {
+            await axios.delete(apiRoute('/salas'), { id: roomId });
+            setRooms(rooms => rooms.filter(room => room._id !== roomId));
+        } catch(error) {
+            console.error('Erro ao remover sala:', error);
+        }
+    }
+
     return (
         <div className="flex h-screen">
             <div className= "w-1/3 bg-gray-700"></div>
@@ -31,7 +40,11 @@ const RemoveRoomsPage = () => {
                     {rooms.map((room, index) => (
                         <div key={index} className="flex mb-4 items-center justify-between w-2/3 mx-auto bg-white border-2 rounded-md p-2 border-gray-400">
                             <div>{room}</div>
-                            <button className="w-32 h-8 bg-gray-200 border-2 rounded-md border-gray-400" type="button">
+                            <button 
+                                className="w-32 h-8 bg-gray-200 border-2 rounded-md border-gray-400" 
+                                type="button"
+                                onClick={() => handleRemoveRoom(room._id)}
+                            >
                                 Eliminar
                             </button>
                         </div>
