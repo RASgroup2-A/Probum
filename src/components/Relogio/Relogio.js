@@ -15,7 +15,7 @@ const Relogio = () => {
 
     return (
         <div>
-            <p>{dataHora.toISOString().replace('T', ' ').slice(0, 19)}</p>
+            <p className='font-bold'>{dataHora.toISOString().replace('T', ' ').slice(0, 19)}</p>
         </div>
     );
 };

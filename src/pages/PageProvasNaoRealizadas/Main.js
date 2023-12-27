@@ -1,7 +1,9 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react';
+import { compareAsc } from 'date-fns';
 
 import MainLayout from "../Layouts/Main";
+import Relogio from '../../components/Relogio/Relogio';
 import { apiRoute } from "../../APIGateway/config";
 
 function getProvasNaoRealizadas(numMecAluno) {
@@ -13,13 +15,34 @@ function getProvasNaoRealizadas(numMecAluno) {
         });
 }
 
+const ButtonRealizarProva = ({ idProva, dataHora }) => {
+    const [enabled, setEnabled] = useState(false);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (compareAsc(new Date(dataHora), new Date()) <= 0) {
+                setEnabled(true);
+                clearInterval(interval);
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [dataHora]);
+
+    if(enabled){
+        return <a title="Realizar prova" 
+                  className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700"
+                  href={`/prova/${idProva}/realizar`}>Realizar prova</a>
+    } else {
+        return <button title="Prova ainda não iniciada" 
+                       className="bg-gray-500 text-white font-semibold py-2 px-4 rounded" 
+                       disabled={true}>Realizar prova</button>
+    }
+}
+
 const ProvaCard = ({ provaData }) => {
-    const [dataHoraActual, setDataHoraActual] = useState(new Date().toISOString().replace('T',' ').slice(0,16))
     let { _id, nome, unidadeCurricular, retrocesso, aleatorizacao, versao } = provaData //> _id é o id da prova
     let { data, edificio, piso, sala, duracao, numVersao } = versao
-
-
-
 
     return (
         <div style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px', margin: '10px' }}>
@@ -37,11 +60,7 @@ const ProvaCard = ({ provaData }) => {
                 </div>
 
                 <div className='flex justify-end items-end'>
-                    {true ? //! verificar aqui se a prova já iniciou
-                        <a title="Realizar prova" className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700"
-                            href={`/prova/${_id}/realizar`}>Realizar prova</a> 
-                        : 
-                        <button title="Prova ainda não iniciada" className="bg-gray-500 text-white font-semibold py-2 px-4 rounded" disabled={true}>Realizar prova</button>}
+                    <ButtonRealizarProva idProva={_id} dataHora={data}/>    
                 </div>
             </div>
         </div>
@@ -67,6 +86,9 @@ const Page = ({ numMecAluno }) => {
     } else {
         return (
             <>
+                <div className="flex justify-end">
+                    <Relogio />
+                </div>
                 {provas.map((prova, index) => <ProvaCard key={index} provaData={prova} />)}
             </>
         );
