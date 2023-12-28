@@ -26,6 +26,15 @@ const isAluno = () => {
     return false
 };
 
+const isTecnico = () => {
+    if (Cookies.get('token')) {
+        const cookieToken = Cookies.get('token') || ''
+        const token = jwtDecode(cookieToken) as JwtPayload
+        return token.type === 'Tecnico';
+    }
+    return false
+};
+
 const isAuthenticated = () => {
     return Cookies.get('token') ? true : false
 }

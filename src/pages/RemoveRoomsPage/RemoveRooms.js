@@ -39,9 +39,11 @@ const RemoveRoomsPage = () => {
                     <div className="ml-8 mt-8 mb-12 w-11/12 bg-gray-100 text-center text-3xl font-bold text-gray-500 rounded-md"> ELIMINAR SALAS </div>
                     {rooms.map((room, index) => (
                         <div key={index} className="flex mb-4 items-center justify-between w-2/3 mx-auto bg-white border-2 rounded-md p-2 border-gray-400">
-                            <div>{JSON.stringify(room)}</div>
+                            <div>
+                                Edifício: {room.edificio} | Piso: {room.piso} | Sala: {room.numSala} | Capacidade: {room.capacidade}
+                            </div>
                             <button 
-                                className="w-32 h-8 bg-gray-200 border-2 rounded-md border-gray-400" 
+                                className="w-32 h-8 bg-gray-200 border-2 rounded-md border-gray-400 hover:bg-gray-400 hover:text-white hover:border-4 hover:border-white focus:bg-gray-500 focus:text-white focus-border-4" 
                                 type="button"
                                 onClick={() => handleRemoveRoom(room._id)}
                             >

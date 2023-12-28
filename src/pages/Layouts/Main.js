@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faFileContract, faClipboardCheck, faDoorOpen, faBell } from '@fortawesome/free-solid-svg-icons'
 import { Link } from "react-router-dom";
 
-import { isDocente, isAluno, numMecanografico, logout } from "../../auth/auth"
+import { isDocente, isAluno, isTecnico, numMecanografico, logout } from "../../auth/auth"
 
 const FuncionalidadesDocentes = () => {
     if (isDocente()) {
@@ -55,7 +55,23 @@ const FuncionalidadesAlunos = () => {
         return (<></>)
     }
 }
-
+{/*
+const FuncionalidadesTecnicos = () => {
+    if (isTecnico()) {
+        return (
+            <>
+                <li>
+                    <Link to={`/gerirsalas`} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                        <FontAwesomeIcon className="mr-4" icon={faBell} />
+                        <span className="ms-3">Salas</span>
+                    </Link>
+                </li>
+            </>
+            
+        )
+    }
+}
+*/}
 
 const MainLayout = ({ pagina }) => {
     return (
