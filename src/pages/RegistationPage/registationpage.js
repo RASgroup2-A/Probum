@@ -120,6 +120,7 @@ const RegisterPage = () => {
                             onChange={(e) => setUsertype(e.target.value)}>
                             <option value="Aluno">Aluno</option>
                             <option value="Docente">Docente</option>
+                            <option value="Tecnico">Tecnico</option>
                         </select>
                     </div>
                     <div className="flex items-center justify-between">
