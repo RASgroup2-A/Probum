@@ -12,13 +12,44 @@ const VERDADEIRO_FALSO = 2
 const QuestVF = ({ visivel, questao, setResposta }) => {
     const [opcoesEscolhidas, setOpcoesEscolhidas] = useState([])
 
-    const handleChangeVF = (e) => {
+    const handleChangeVF = (e,value) => {
+        let re = /q(\d+)op(\d+)/
+        let optionID = parseInt(re.exec(e.target.name)[2])
 
+        setOpcoesEscolhidas(prevOpcoes => {
+            if(value === 'V'){
+                return [...prevOpcoes, optionID];
+            } else {
+                return prevOpcoes.filter(opId => opId !== optionID);
+            }
+        })
     }
+
+    useEffect(() => {
+        setResposta(questao.id, { opcoesEscolhidas: opcoesEscolhidas })
+    }, [opcoesEscolhidas, questao.id])
 
     return (
         <div style={{ display: visivel ? 'block' : 'none' }}>
-
+            <p><strong>Cotação: </strong>{questao.cotacao}</p>
+            <p>{questao.descricao}</p>
+            <div>
+                <table>
+                    <tbody>
+                        {questao.opcoes.map(opcao =>
+                            <tr key={opcao.id}>
+                                <td>{opcao.texto}</td>
+                                <td>
+                                    <label>Verdadeira</label>
+                                    <input type="radio" onChange={(e) => handleChangeVF(e,'V')} name={`q${questao.id}op${opcao.id}`}/>
+                                    <label>Falsa</label>
+                                    <input type="radio" onChange={(e) => handleChangeVF(e,'F')} name={`q${questao.id}op${opcao.id}`}/>
+                                </td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }
