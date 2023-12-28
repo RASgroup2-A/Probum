@@ -1,13 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Button } from 'flowbite-react'
+import axios from 'axios'
 
 import { numMecanografico } from '../../auth/auth'
 import MainLayout from '../Layouts/Main';
 import Relogio from '../../components/Relogio/Relogio';
+import { apiRoute } from '../../APIGateway/config';
 
 const ESCOLHA_MULTIPLA = 1
 const VERDADEIRO_FALSO = 2
+
+async function submeterResolucao(resolucao) {
+    let response = await axios.post(apiRoute('/provas/resolucoes'),resolucao)
+    return response.data
+}
 
 const QuestVF = ({ visivel, questao, setResposta }) => {
     const [opcoesEscolhidas, setOpcoesEscolhidas] = useState([])
@@ -160,6 +167,16 @@ const Page = ({ provaData }) => {
         setVisibilidadeQuestoes({ ...visibilidadeQuestoes, '0': true }) //> para apresentar a primeira questão
     }, [])
 
+    const submitResolucao = () => {
+        submeterResolucao(resolucao)
+        .then((result) => {
+            alert('Resolução submetida com sucesso!')
+            window.location = `/homealuno/${numMecanografico()}`
+        }).catch((err) => {
+            alert(`Problema no envio da resolução: ${err.message}`)
+        });
+    }
+
     return (<>
         <p>Início: {provaData.versao.data}, hora actual: <Relogio /></p>
         <hr />
@@ -177,7 +194,7 @@ const Page = ({ provaData }) => {
             </div>
         </div>
         <div className='flex justify-center'>
-            <Button color='warning' onClick={() => { }}>Terminar prova</Button>
+            <Button color='warning' onClick={submitResolucao}>Terminar prova</Button>
         </div>
     </>)
 }
