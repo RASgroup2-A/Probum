@@ -55,7 +55,8 @@ const logout = () => {
 export {
     isDocente,
     isAluno,
+    isTecnico,
     isAuthenticated,
     numMecanografico,
-    logout
+    logout,
 }

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { isDocente, isAluno, numMecanografico } from "../../auth/auth"
+import { isDocente, isAluno, isTecnico, numMecanografico } from "../../auth/auth"
 
 
 import { apiRoute } from '../../APIGateway/config'
@@ -46,6 +46,7 @@ const LoginPage = () => {
                 Cookies.set('token', result.token); //> define o cookie "token" para ser usado na autenticação
                 if(isAluno()) window.location = '/homealuno/'+numMecanografico()
                 else if(isDocente()) window.location = '/criarprova'
+                else if(isTecnico()) window.location = '/gerirsalas'
             }).catch((err) => {
                 let message = "O email ou a password que inseriu estão incorretos. Tente novamente."
                 modal('Acesso negado', message);
