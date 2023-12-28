@@ -23,7 +23,7 @@ const RemoveRoomsPage = () => {
 
     async function handleRemoveRoom(roomId) {
         try {
-            await axios.delete(apiRoute('/salas/${roomId}'));
+            await axios.delete(apiRoute(`/salas/${roomId}`));
             setRooms(rooms => rooms.filter(room => room._id !== roomId));
         } catch(error) {
             console.error('Erro ao remover sala:', error);
@@ -39,7 +39,7 @@ const RemoveRoomsPage = () => {
                     <div className="ml-8 mt-8 mb-12 w-11/12 bg-gray-100 text-center text-3xl font-bold text-gray-500 rounded-md"> ELIMINAR SALAS </div>
                     {rooms.map((room, index) => (
                         <div key={index} className="flex mb-4 items-center justify-between w-2/3 mx-auto bg-white border-2 rounded-md p-2 border-gray-400">
-                            <div>{room}</div>
+                            <div>{JSON.stringify(room)}</div>
                             <button 
                                 className="w-32 h-8 bg-gray-200 border-2 rounded-md border-gray-400" 
                                 type="button"

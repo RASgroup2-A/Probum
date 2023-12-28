@@ -5,7 +5,7 @@ const Relogio = () => {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            setDataHora(new Date()); 
+            setDataHora(new Date());
         }, 1000);
 
         return () => {
@@ -14,9 +14,7 @@ const Relogio = () => {
     }, []);
 
     return (
-        <div>
-            <p className='font-bold'>{dataHora.toISOString().replace('T', ' ').slice(0, 19)}</p>
-        </div>
+        <span className='font-bold'>{dataHora.toISOString().replace('T', ' ').slice(0, 19)}</span>
     );
 };
 

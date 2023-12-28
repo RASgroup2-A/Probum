@@ -14,7 +14,7 @@ const AddRoomsPage = () => {
                     <div className="ml-8 mt-8 mb-12 w-11/12 bg-gray-100 text-center text-3xl font-bold text-gray-500 rounded-md"> ADICIONAR SALAS </div>
                     <div className="flex mt-64 items-center justify-between w-2/3 mx-auto bg-white border-2 rounded-md p-2 border-gray-400">
                         <input
-                            type="fyle"
+                            type="file"
                             id="inputFile"
                             placeholder="Inserir ficheiro"
                         />
