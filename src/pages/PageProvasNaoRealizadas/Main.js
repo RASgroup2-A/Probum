@@ -46,7 +46,7 @@ const ButtonRealizarProva = ({ idProva, dataHora, provaData }) => {
 const ProvaCard = ({ provaData }) => {
     let { _id, nome, unidadeCurricular, retrocesso, aleatorizacao, versao } = provaData //> _id é o id da prova
     let { data, edificio, piso, sala, duracao, numVersao } = versao
-
+    useEffect(() => {console.log('Em provaCard');console.log(provaData)},[])
     return (
         <div style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px', margin: '10px' }}>
             <h2 className="text-xl"><strong>{nome}</strong></h2> <hr />
