@@ -13,6 +13,7 @@ import PageProvasNaoRealizadas from "./pages/PageProvasNaoRealizadas/Main";
 import AddRoomsPage from "./pages/AddRoomsPage/AddRooms";
 import RemoveRoomsPage from "./pages/RemoveRoomsPage/RemoveRooms";
 import ManageRoomsPage from "./pages/ManageRoomsPage/ManageRooms";
+import RealizarProva from "./pages/PageRealizarProva/Main";
 
 function App() {
     return (
@@ -25,13 +26,13 @@ function App() {
                 <Route path="/criarprova" element={isDocente() ? <CreateProvaPage /> : <Navigate to="/login" />} />
                 <Route path="/editPerf" element={isAuthenticated() ? <EditPerfilPage /> : <Navigate to="/login" />} />
                 <Route path="/provas/porRealizar" element={isAluno() ? <PageProvasNaoRealizadas numMecAluno={numMecanografico()} /> : <Navigate to="/login" />} />
-                <Route path="/prova/:idProva/realizar" />
+                <Route path="/prova/realizar" element={isAluno() ? <RealizarProva /> : <Navigate to="/login" /> }/>
                 {/* <Route path="/classificarprovas" element={} /> */}
 
-                <Route path="*" element={<Navigate to="/login" />}/>
                 <Route path="/gerirsalas" element={<ManageRoomsPage />} />
                 <Route path="/adicionarsalas" element={<AddRoomsPage />} /> 
                 <Route path="/removersalas" element={<RemoveRoomsPage />} />
+                <Route path="*" element={<Navigate to="/login" />}/>
 
             </Routes>
         </BrowserRouter>

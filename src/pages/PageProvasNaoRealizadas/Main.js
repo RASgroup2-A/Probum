@@ -4,6 +4,7 @@ import { compareAsc } from 'date-fns';
 
 import MainLayout from "../Layouts/Main";
 import Relogio from '../../components/Relogio/Relogio';
+import { Link } from 'react-router-dom';
 import { apiRoute } from "../../APIGateway/config";
 
 function getProvasNaoRealizadas(numMecAluno) {
@@ -15,7 +16,7 @@ function getProvasNaoRealizadas(numMecAluno) {
         });
 }
 
-const ButtonRealizarProva = ({ idProva, dataHora }) => {
+const ButtonRealizarProva = ({ idProva, dataHora, provaData }) => {
     const [enabled, setEnabled] = useState(false);
 
     useEffect(() => {
@@ -29,10 +30,12 @@ const ButtonRealizarProva = ({ idProva, dataHora }) => {
         return () => clearInterval(interval);
     }, [dataHora]);
 
-    if(enabled){
-        return <a title="Realizar prova" 
-                  className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700"
-                  href={`/prova/${idProva}/realizar`}>Realizar prova</a>
+    if(true){
+        return <Link title="Realizar prova" 
+                     className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700"
+                     to="/prova/realizar"
+                     state={provaData}
+                >Realizar prova</Link>
     } else {
         return <button title="Prova ainda não iniciada" 
                        className="bg-gray-500 text-white font-semibold py-2 px-4 rounded" 
@@ -60,7 +63,7 @@ const ProvaCard = ({ provaData }) => {
                 </div>
 
                 <div className='flex justify-end items-end'>
-                    <ButtonRealizarProva idProva={_id} dataHora={data}/>    
+                    <ButtonRealizarProva idProva={_id} dataHora={data} provaData={provaData}/>    
                 </div>
             </div>
         </div>
