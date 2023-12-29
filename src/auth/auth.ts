@@ -12,7 +12,7 @@ const isDocente = () => {
     if (Cookies.get('token')) {
         const cookieToken = Cookies.get('token') || ''
         const token = jwtDecode(cookieToken) as JwtPayload
-        return token.type === 'Docente';
+        return token.type === 'Docente' || token.type === 'D'
     }
     return false
 };
@@ -21,7 +21,7 @@ const isAluno = () => {
     if (Cookies.get('token')) {
         const cookieToken = Cookies.get('token') || ''
         const token = jwtDecode(cookieToken) as JwtPayload
-        return token.type === 'Aluno';
+        return token.type === 'Aluno' || token.type === 'A'
     }
     return false
 };
