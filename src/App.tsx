@@ -14,6 +14,7 @@ import AddRoomsPage from "./pages/AddRoomsPage/AddRooms";
 import RemoveRoomsPage from "./pages/RemoveRoomsPage/RemoveRooms";
 import ManageRoomsPage from "./pages/ManageRoomsPage/ManageRooms";
 import RealizarProva from "./pages/PageRealizarProva/Main";
+import ClassificationsStudentPage from "./pages/PageClassifications/Main"
 
 function App() {
     return (
@@ -21,6 +22,7 @@ function App() {
             <Routes>
                 <Route path="/notificacoes/:numMecanografico" element={<NotificationsPage />} />
                 <Route path="/homealuno/:numMecanografico" element={<HomeStudentPage />} />
+                <Route path="/provas/realizadas/:numMecanografico" element={isAluno() ? <ClassificationsStudentPage /> : <Navigate to="/login" />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/criarprova" element={isDocente() ? <CreateProvaPage /> : <Navigate to="/login" />} />

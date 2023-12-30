@@ -44,7 +44,7 @@ const FuncionalidadesAlunos = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link to="/provas/realizadas" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                    <Link to={`/provas/realizadas/${numMecanografico()}`} className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                         <FontAwesomeIcon className="mr-4" icon={faClipboardCheck} />
                         <span className="ms-3">Consultar classificações</span>
                     </Link>
