@@ -25,8 +25,8 @@ const Page = () => {
             <>
                 {
                     provasdone.map((prova)=>{
-                       return <ProvaCard nome={prova.nome} uc={prova.unidadeCurricular} docentes={prova.docentes}></ProvaCard>
-                    })
+                       return <ProvaCard nome={prova.nome} uc={prova.unidadeCurricular} docentes={prova.docentes} numMecanografico={numMecanografico} provaid={prova._id} mensagem="Mostrar Prova"></ProvaCard>
+                    })//<p>{JSON.stringify(prova)}</p>/
                 }
             </>
         )
