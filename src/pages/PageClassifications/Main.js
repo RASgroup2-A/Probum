@@ -20,12 +20,12 @@ const Page = () => {
 
 
 
-    if(provasdone!=null){
+    if(provasdone!=null && provasdone.length>0){
         return(
             <>
                 {
                     provasdone.map((prova)=>{
-                       return <ProvaCard nome={prova.nome} uc={prova.unidadeCurricular} docentes={prova.docentes} numMecanografico={numMecanografico} provaid={prova._id} mensagem="Mostrar Prova"></ProvaCard>
+                       return <ProvaCard nome={prova.nome} uc={prova.unidadeCurricular} docentes={prova.docentes} numMecanografico={numMecanografico} provaid={prova._id} versao={prova.versao.numVersao} mensagem="Mostrar Prova"></ProvaCard>
                     })//<p>{JSON.stringify(prova)}</p>/
                 }
             </>

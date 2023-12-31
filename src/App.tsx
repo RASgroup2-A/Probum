@@ -24,7 +24,7 @@ function App() {
                 <Route path="/notificacoes/:numMecanografico" element={<NotificationsPage />} />
                 <Route path="/homealuno/:numMecanografico" element={<HomeStudentPage />} />
                 <Route path="/provas/realizadas/:numMecanografico" element={isAluno() ? <ClassificationsStudentPage /> : <Navigate to="/login" />} />
-                <Route path="/provas/realizadas/:numMecanografico/:idProva" element={isAluno() ? <ClassificationsDetailsPage /> : <Navigate to="/login" />} />
+                <Route path="/provas/realizadas/:numMecanografico/:idProva/:versao" element={isAluno() ? <ClassificationsDetailsPage /> : <Navigate to="/login" />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/criarprova" element={isDocente() ? <CreateProvaPage /> : <Navigate to="/login" />} />
