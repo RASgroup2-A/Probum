@@ -1,7 +1,5 @@
 import React,{ useState } from 'react';
 import MainLayout from "../Layouts/Main";
-import { useParams } from 'react-router-dom';
-import ProvaCard from '../../components/ProvaCard/prova';
 import ClassifyCard from '../../components/Classify/classify';
 import { apiRoute } from '../../APIGateway/config'
 import axios from 'axios';
