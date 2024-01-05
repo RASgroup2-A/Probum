@@ -5,14 +5,15 @@ import ProvaCard from '../../components/ProvaCard/prova';
 import ClassifyCard from '../../components/Classify/classify';
 import { apiRoute } from '../../APIGateway/config'
 import axios from 'axios';
+import { numMecanografico } from "../../auth/auth"
 
 const Page = () => {
-    const {idDocente} = useParams()
+    // const {idDocente} = useParams()
     const [provas,setProvas] = useState(null)
 
     React.useEffect(()=>{
         async function getallProvas() {
-            var response = await axios.get(apiRoute(`/provas/docente/${idDocente}`))
+            var response = await axios.get(apiRoute(`/provas/docente/${numMecanografico()}`))
             setProvas(response.data)
         }
         getallProvas();
@@ -24,7 +25,7 @@ const Page = () => {
             <>
                 {
                     provas.map((prova)=>{
-                       return <ClassifyCard nome={prova.nome} uc={prova.unidadeCurricular} docentes={prova.docentes} numMecanografico={"00"} provaid={prova._id} mensagem="Classificar Prova"></ClassifyCard>
+                       return <ClassifyCard nome={prova.nome} uc={prova.unidadeCurricular} docentes={prova.docentes} numMecanografico={numMecanografico()} provaid={prova._id} mensagem="Classificar Prova"></ClassifyCard>
                     })//<p>{JSON.stringify(prova)}</p>/
                 }
             </>
