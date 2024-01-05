@@ -18,13 +18,10 @@ const Page = () => {
             setnotificationVisibility(true);
     });
 
-    const closeNotification = () => {
-        setnotificationVisibility(false);
-    }
 
     return (
         <>
-            <NotificationCard id="notificationcard" text={notification} visible={notificationVisibility} onClick={closeNotification} />
+            <NotificationCard id="notificationcard" text={notification} visible={notificationVisibility} />
             <div style={{ fontWeight: 'bold',fontSize: "35px"}}>Dashboard - Home Page</div> 
             <div style={{ fontSize: "20px" }}>Bem-Vindo, {numMecanografico}</div> 
             <div className="slogan-image-container">
