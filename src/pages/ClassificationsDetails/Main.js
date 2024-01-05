@@ -37,13 +37,14 @@ const Page = () =>{
         return(
             <>
                 <big><b>Versão: {resolucao.idVersao}</b></big>
+                <big><b>  Nota: {resolucao.respostas.map(resp => resp.cotacao).reduce((a,b) => a+b)}</b></big>
                 <hr style={{border: "1px solid grey"}}/>
                 {
                     resolucao.respostas.map((q)=>{
                     n=n+1;
                     return <div style={{backgroundColor: "#dddddd",padding:"15px",margin:"10px",borderRadius:"10px",width: "600px"}}>
                                 <p><b>Exercício nº {q.idQuestao}</b></p>
-                                <p>Cotação Obtida: {q.cotacao} valores</p>
+                                <p>Cotação Obtida: {q.cotacao} pontos</p>
                                 <b>Questão : {prova[0].versoes.questoes[n].descricao}</b>
                                 <br></br>
                                 {prova[0].versoes.questoes[n].opcoes.map((opcao)=>
