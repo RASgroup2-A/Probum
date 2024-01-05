@@ -30,7 +30,7 @@ const ButtonRealizarProva = ({ idProva, dataHora, provaData }) => {
         return () => clearInterval(interval);
     }, [dataHora]);
 
-    if(true){
+    if(enabled){
         return <Link title="Realizar prova" 
                      className="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700"
                      to="/prova/realizar"
