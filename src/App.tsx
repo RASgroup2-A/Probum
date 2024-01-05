@@ -14,8 +14,10 @@ import AddRoomsPage from "./pages/AddRoomsPage/AddRooms";
 import RemoveRoomsPage from "./pages/RemoveRoomsPage/RemoveRooms";
 import ManageRoomsPage from "./pages/ManageRoomsPage/ManageRooms";
 import RealizarProva from "./pages/PageRealizarProva/Main";
-import ClassificationsStudentPage from "./pages/PageClassifications/Main"
 import ClassificationsDetailsPage from "./pages/ClassificationsDetails/Main"
+import ClassificationsAuto from "./pages/ClassificacaoAuto/Main";
+import ClassificationsStudentPage from "./pages/PageClassifications/Main";
+
 
 function App() {
     return (
@@ -31,8 +33,8 @@ function App() {
                 <Route path="/editPerf" element={isAuthenticated() ? <EditPerfilPage /> : <Navigate to="/login" />} />
                 <Route path="/provas/porRealizar" element={isAluno() ? <PageProvasNaoRealizadas numMecAluno={numMecanografico()} /> : <Navigate to="/login" />} />
                 <Route path="/prova/realizar" element={isAluno() ? <RealizarProva /> : <Navigate to="/login" /> }/>
-                {/* <Route path="/classificarprovas" element={} /> */}
-
+                <Route path="/classificarprovas" element={isDocente() ? <ClassificationsAuto /> : <Navigate to="/login"/>} />
+                
                 <Route path="/gerirsalas" element={<ManageRoomsPage />} />
                 <Route path="/adicionarsalas" element={<AddRoomsPage />} /> 
                 <Route path="/removersalas" element={<RemoveRoomsPage />} />

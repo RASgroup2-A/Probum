@@ -37,10 +37,10 @@ const Page = () => {
     }
 }
 
-const ClassificationsStudentPage = () => {
+const ClassificationsAuto = () => {
     return (
         <MainLayout pagina={<Page />}/>
     )
 }    
 
-export default ClassificationsStudentPage;
+export default ClassificationsAuto;
